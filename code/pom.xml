@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.4.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.yumiao</groupId>
+    <artifactId>code</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>code</name>
+    <description>Demo project for Spring Boot</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ethereum</groupId>
+            <artifactId>solcJ-all</artifactId>
+            <version>0.4.25</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/solcJ-all-0.4.25.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>org.web3j</groupId>
+            <artifactId>core</artifactId>
+            <version>3.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxjava -->
+        <dependency>
+            <groupId>io.reactivex.rxjava2</groupId>
+            <artifactId>rxjava</artifactId>
+            <version>2.2.21</version>
+        </dependency>
+
+
+    </dependencies>
+
+    <repositories>
+
+        <repository>
+            <id>nexus-ethereum</id>
+            <name>Nexus ethereum</name>
+            <layout>default</layout>
+            <url>https://dl.bintray.com/ethereum/maven/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+
+    </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+<!--                <version>3.8.2.RELEASE</version>&ndash;&gt;-->
+                <executions>
+                    <execution>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+<!--            <plugin>-->
+<!--                <groupId>org.web3j</groupId>-->
+<!--                <artifactId>web3j-maven-plugin</artifactId>-->
+<!--                <version>4.6.5</version>-->
+<!--                <configuration>-->
+<!--                    <packageName>com.zuehlke.blockchain.model</packageName>-->
+<!--                    <sourceDestination>src/main/java/generated</sourceDestination>-->
+<!--                    <nativeJavaType>true</nativeJavaType>-->
+<!--                    <outputFormat>java,bin</outputFormat>-->
+<!--                    <soliditySourceFiles>-->
+<!--                        <directory>src/main/resources</directory>-->
+<!--                        <includes>-->
+<!--                            <include>**/*.sol</include>-->
+<!--                        </includes>-->
+<!--                    </soliditySourceFiles>-->
+<!--                    <outputDirectory>-->
+<!--                        <java>src/java/generated</java>-->
+<!--                        <bin>src/bin/generated</bin>-->
+<!--                        <abi>src/abi/generated</abi>-->
+<!--                    </outputDirectory>-->
+<!--                    <contract>-->
+<!--                        <includes>-->
+<!--                            <include>greeter</include>-->
+<!--                        </includes>-->
+<!--                        <excludes>-->
+<!--                            <exclude>mortal</exclude>-->
+<!--                        </excludes>-->
+<!--                    </contract>-->
+
+<!--                </configuration>-->
+<!--            </plugin>-->
+
+            <plugin>
+                <groupId>org.web3j</groupId>
+                <artifactId>web3j-maven-plugin</artifactId>
+                <version>4.6.5</version>
+                <configuration>
+                    <packageName>com.yumiao.code.contract</packageName>
+                    <sourceDestination>src/main/java</sourceDestination>
+                    <nativeJavaType>true</nativeJavaType>
+                    <outputFormat>java</outputFormat>
+                    <soliditySourceFiles>
+                        <directory>src/main/resources/solidity</directory>
+                        <includes>
+                            <include>**/*.sol</include>
+                        </includes>
+                    </soliditySourceFiles>
+                    <outputDirectory>
+                        <java>src/main/java</java>
+                        <bin>src/main/resources</bin>
+                        <abi>src/main/resources</abi>
+                    </outputDirectory>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>

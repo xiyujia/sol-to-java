@@ -1,0 +1,38 @@
+一、安装web3j
+
+$ brew tap web3j/web3j
+$ brew install web3j
+$ web3j
+
+              _      _____ _     _
+             | |    |____ (_)   (_)
+__      _____| |__      / /_     _   ___
+\ \ /\ / / _ \ '_ \     \ \ |   | | / _ \
+ \ V  V /  __/ |_) |.___/ / | _ | || (_) |
+  \_/\_/ \___|_.__/ \____/| |(_)|_| \___/
+                         _/ |
+                        |__/
+
+Usage: web3j version|wallet|solidity ...
+二、安装solc
+
+sudo npm install -g solc
+
+三、生成.bin和.abi
+
+solcjs ConfirmOrder.sol --bin --abi --optimze -o
+这里的默认路径是和sol文件同级
+
+四、生成.java
+
+$ web3j solidity generate --solidityTypes ConfirmOrder_sol_ConfirmOrderContract.bin ConfirmOrder_sol_ConfirmOrderContract.abi -o generatejava -p com.liangzi.vaulet.contract
+这里的参数，-o后面是生成的当前目录下面的路径，开头不要加斜杠，-p后面是包名
+=================================================================
+
+五、将java文件放入项目
+
+六、启动私有链
+
+miner.start(1)
+
+miner.stop()
