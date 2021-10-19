@@ -20,12 +20,12 @@ sudo npm install -g solc
 
 三、生成.bin和.abi
 
-solcjs ConfirmOrder.sol --bin --abi --optimze -o
+solcjs BulkSender.sol --bin --abi --optimze -o
 这里的默认路径是和sol文件同级
 
 四、生成.java
 
-$ web3j solidity generate --solidityTypes ConfirmOrder_sol_ConfirmOrderContract.bin ConfirmOrder_sol_ConfirmOrderContract.abi -o generatejava -p com.liangzi.vaulet.contract
+$ web3j solidity generate --solidityTypes BulkSender_sol_BulkSender.bin BulkSender_sol_BulkSender.abi -o generatejava -p com.liangzi.vaulet.contract
 这里的参数，-o后面是生成的当前目录下面的路径，开头不要加斜杠，-p后面是包名
 =================================================================
 
