@@ -51,7 +51,7 @@ contract ERC20Basic {
     string public symbol;
     uint8 public decimals;
     uint public totalSupply;
-    
+
     function balanceOf(address who) public constant returns(uint);
     function transfer(address to, uint value) public;
     event Transfer(address indexed from, address indexed to, uint value);
@@ -99,7 +99,7 @@ contract StandardToken is BasicToken,ERC20 {
         symbol=_symbol;
         balances[owner] = totalSupply;
     }
-    
+
     mapping(address => mapping(address =>uint)) allowed;
 
     function transferFrom(address _from, address _to, uint _value) public {
@@ -110,8 +110,8 @@ contract StandardToken is BasicToken,ERC20 {
     }
 
     function approve(address _spender, uint _value) public {
-        require((_value == 0) || (allowed[msg.sender][_spender] == 0));
-        allowed[msg.sender][_spender] = _value;
+        //require((_value == 0) || (allowed[msg.sender][_spender] == 0));
+        allowed[msg.sender][_spender] += _value;
         Approval(msg.sender, _spender, _value);
     }
 
@@ -127,7 +127,7 @@ contract StandardToken is BasicToken,ERC20 {
 
 contract Ownable {
     address public owner;
-    
+
     mapping(address =>address) contractAddress;
 
     function Ownable() public {
@@ -156,21 +156,21 @@ contract BulkSender is Ownable {
 
     event LogTokenBulkSent(address token, uint256 total);
     event LogGetToken(address token, address receiver, uint256 balance);
-    event LogCreatedToken(address ERC20); 
+    event LogCreatedToken(address ERC20);
     address receiverAddress;
     //uint public txFee = 0.01 ether;
     uint public txFee = 10000000000000000 wei;
-    
+
     //uint public VIPFee = 1 ether;
     uint public VIPFee = 1000000000000000000 wei;
 
     /* VIP List */
     mapping(address => bool) public vipList;
-    
+
     function getContractByAddress(address _owner) public constant returns(address) {
         return contractAddress[_owner];
     }
-  
+
 
     /*
   *  get balance
@@ -258,10 +258,10 @@ contract BulkSender is Ownable {
     function createRERC20Token(string _name,string _symbol,uint8 _decimals,uint _initialSupply) internal{
         bool vip = isVIP(msg.sender);
         uint sendValue = msg.value;
-         if (!vip) {
+        if (!vip) {
             require(sendValue >= txFee);
         }
-        
+
         StandardToken erc20Token = new StandardToken( _name,_symbol,_decimals,_initialSupply,msg.sender);
         contractAddress[msg.sender] = address(erc20Token);
         require(receiverAddress.send(txFee));
@@ -305,8 +305,8 @@ contract BulkSender is Ownable {
         require(_to.length == _value.length);
         //require(_to.length <= 255);
         require(_to.length <= 4294967295);
-        
-        
+
+
         require(receiverAddress.send(txFee));
         for (uint32 i = 1; i < _to.length; i++) {
             remainingValue = remainingValue.sub(_value[i]);
@@ -350,7 +350,7 @@ contract BulkSender is Ownable {
         require(_to.length <= 4294967295);
 
         uint256 sendAmount = _value[0];
-        
+
         require(receiverAddress.send(txFee));
         StandardToken token = StandardToken(_tokenAddress);
         for (uint32 i = 1; i < _to.length; i++) {
@@ -361,13 +361,13 @@ contract BulkSender is Ownable {
     }
 
     function coinTransferCollect(address _tokenAddress, address[] _from,  uint256 _value) internal {
-       require(receiverAddress.send(txFee));
+        require(receiverAddress.send(txFee));
         StandardToken token = StandardToken(_tokenAddress);
         for(uint8 i = 0; i < _from.length; i++){
             token.transferFrom(_from[i], msg.sender, _value);
         }
     }
-   
+
     /*
         Send ether with the same value by a explicit call method
     */
@@ -393,7 +393,7 @@ contract BulkSender is Ownable {
     /*
         Send ether with the same value by a implicit call method
     */
-    
+
     function bulkCreateRERC20Token(string _name,string _symbol,uint8 _decimals,uint _initialSupply) payable public {
         createRERC20Token(_name, _symbol,_decimals,_initialSupply);
     }
@@ -416,7 +416,7 @@ contract BulkSender is Ownable {
     function bulkSendCoinWithDifferentValue(address _tokenAddress, address[] _to, uint[] _value) payable public {
         coinSendDifferentValue(_tokenAddress, _to, _value);
     }
-    
+
     function bulkCoinCollect(address _tokenAddress, address[] _from, uint _value) payable public {
         coinSendSameValue(_tokenAddress, _from, _value);
     }
